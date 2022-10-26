@@ -6,7 +6,7 @@ pipeline{
 	agent none
       stages{
            stage('Checkout'){
-              agent any
+              agent {label 'jenkins_slave'}
               steps{
 		 echo 'cloning..'
                  git 'https://github.com/Sonal0409/DevOpsClassCodes.git'
