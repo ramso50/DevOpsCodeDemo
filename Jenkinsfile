@@ -4,13 +4,13 @@ pipeline{
         jdk 'myjava'
         maven 'mymaven'
     }
-	agent any
+	agent {label 'jenkins_slave'}
       stages{
            stage('Checkout'){
 	    
                steps{
 		 echo 'cloning..'
-                 git 'https://github.com/Sonal0409/DevOpsClassCodes.git'
+                 git 'https://github.com/theitern/DevOpsCodeDemo.git'
               }
           }
           stage('Compile'){
