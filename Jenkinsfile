@@ -1,27 +1,26 @@
-
 pipeline{
     tools{
         jdk 'myjava'
         maven 'mymaven'
     }
-	agent {label 'jenkins_slave'}
+	agent none
       stages{
            stage('Checkout'){
-	    
-               steps{
+              agent any
+              steps{
 		 echo 'cloning..'
-                 git 'https://github.com/theitern/DevOpsCodeDemo.git'
+                 git 'https://github.com/Sonal0409/DevOpsClassCodes.git'
               }
           }
           stage('Compile'){
-             
+              agent {label 'jenkins_slave'}
               steps{
-                  echo 'complie the code..'
+                  echo 'compiling..'
                   sh 'mvn compile'
 	      }
           }
           stage('CodeReview'){
-		  
+              agent {label 'jenkins_slave'}
               steps{
 		    
 		  echo 'codeReview'
@@ -29,22 +28,22 @@ pipeline{
               }
           }
            stage('UnitTest'){
-		  
+              agent {label 'jenkins_slave'}
               steps{
-	         
+	         echo 'Testing'
                   sh 'mvn test'
               }
-          
+               post {
+               success {
+                   junit 'target/surefire-reports/*.xml'
+               }
+           }	
           }
-        
           stage('Package'){
-		  
+              agent any
               steps{
-		  
                   sh 'mvn package'
               }
           }
-	     
-          
       }
 }
