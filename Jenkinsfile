@@ -3,24 +3,21 @@ pipeline{
         jdk 'myjava'
         maven 'mymaven'
     }
-    agent {label 'jenkins_slave'}
+	agent any
       stages{
-	   stage('Checkout'){
-              
-		steps{
-          echo 'cloning..'
-                 git 'https://github.com/ramso50/DevOpsCodeDemo.git'
+           stage('Checkout'){
+              steps{
+		 echo 'cloning..'
+                 git 'https://github.com/theitern/DevOpsCodeDemo.git'
               }
           }
           stage('Compile'){
-              agent {label 'jenkins_slave'}
               steps{
                   echo 'compiling..'
                   sh 'mvn compile'
 	      }
           }
           stage('CodeReview'){
-              agent {label 'jenkins_slave'}
               steps{
 		    
 		  echo 'codeReview'
@@ -28,7 +25,6 @@ pipeline{
               }
           }
            stage('UnitTest'){
-              agent {label 'jenkins_slave'}
               steps{
 	         echo 'Testing'
                   sh 'mvn test'
@@ -40,7 +36,6 @@ pipeline{
            }	
           }
           stage('Package'){
-              agent any
               steps{
                   sh 'mvn package'
               }
